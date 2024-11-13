@@ -1,17 +1,41 @@
 <!DOCTYPE html>
-<html lang="">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-  </head>
-  <body>
-    <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
-    </noscript>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  </body>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="<%= BASE_URL %>favicon.ico">
+  <title><%= htmlWebpackPlugin.options.title %> - Visa Connection App</title>
+  
+  <!-- SEO Meta Tags -->
+  <meta name="description" content="Visa Connection App helps users find visa-sponsored job opportunities worldwide.">
+  <meta name="keywords" content="visa, sponsorship, job opportunities, international jobs, visa connection">
+  
+  <!-- Open Graph Meta Tags for Social Media Sharing -->
+  <meta property="og:title" content="Visa Connection App">
+  <meta property="og:description" content="Connecting international job seekers with visa-sponsored opportunities.">
+  <meta property="og:image" content="<%= BASE_URL %>share-image.png"> <!-- Replace with actual share image if available -->
+  <meta property="og:url" content="https://yourappdomain.com"> <!-- Replace with your app's URL -->
+
+  <!-- Twitter Meta Tags -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Visa Connection App">
+  <meta name="twitter:description" content="Find visa-sponsored jobs to work abroad.">
+  <meta name="twitter:image" content="<%= BASE_URL %>share-image.png"> <!-- Replace with actual Twitter image if available -->
+
+</head>
+<body>
+  <noscript>
+    <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+  </noscript>
+  
+  <!-- Loading Message Displayed Before App Mounts -->
+  <div id="app">
+    <div id="loading-message" style="text-align: center; padding: 50px; font-size: 1.2em;">
+      Loading the Visa Connection App, please wait...
+    </div>
+  </div>
+
+  <!-- Vue app's built files will be auto-injected here by Vue CLI -->
+</body>
 </html>
