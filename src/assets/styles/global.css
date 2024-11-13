@@ -1,4 +1,4 @@
-/* Global Reset */
+/* Reset */
 * {
   margin: 0;
   padding: 0;
@@ -7,14 +7,25 @@
 
 /* Base Typography */
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7fa;
+  color: #333;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #2c3e50;
 }
 
 h1 {
-  color: #2c3e50;
-  font-size: 2.5em;
+  font-size: 2.2rem;
+  font-weight: 700;
   margin-bottom: 20px;
+}
+
+h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-bottom: 15px;
 }
 
 /* Utility Classes */
@@ -22,10 +33,24 @@ h1 {
   text-align: center;
 }
 
-.flex {
-  display: flex;
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
 }
 
-.margin-auto {
-  margin: auto;
+/* Button Styles */
+button {
+  padding: 10px 20px;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2980b9;
 }

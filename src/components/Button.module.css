@@ -7,9 +7,8 @@
     font-weight: bold;
     cursor: pointer;
     transition: background-color 0.3s;
-  }
-  
-  .buttonPrimary:hover {
+}
+
+.buttonPrimary:hover {
     background-color: #368f6b;
-  }
-  
+}

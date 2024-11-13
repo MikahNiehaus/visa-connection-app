@@ -1,24 +1,16 @@
-# visa-connection-app
+# Visa Connection App
 
-## Project setup
-```
-npm install
-```
+The Visa Connection App is a web application that helps connect job seekers with employers offering visa sponsorship.
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+## Features
 
-### Compiles and minifies for production
-```
-npm run build
-```
+- **Home Page**: Provides an overview of the application.
+- **About Page**: Information about the app’s mission.
+- **Sign In**: Allows users to log in (currently allows any credentials for testing).
+- **Sign Up**: Allows users to register (currently allows any credentials for testing).
 
-### Lints and fixes files
-```
-npm run lint
-```
+## Installation
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/YourUsername/visa-connection-app.git
