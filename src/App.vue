@@ -5,12 +5,13 @@
       <nav class="navbar">
         <router-link to="/home">Home</router-link>
         <router-link to="/about">About</router-link>
+        <router-link to="/jobs">Jobs</router-link>
         <router-link to="/signin">Sign In</router-link>
         <router-link to="/signup">Sign Up</router-link>
       </nav>
     </header>
     <main class="app-content">
-      <router-view></router-view> <!-- This is where page content loads -->
+      <router-view></router-view>
     </main>
   </div>
 </template>
