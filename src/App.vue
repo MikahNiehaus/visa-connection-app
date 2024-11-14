@@ -1,17 +1,21 @@
 <template>
   <div id="app">
     <header class="app-header">
-      <h1 class="logo">Visa Connection</h1>
+      <div class="logo-container">
+        <img src="@/assets/logo.png" alt="Logo" class="logo-image" />
+        <h1 class="logo">Visa Connection</h1>
+      </div>
       <nav class="navbar">
         <router-link to="/home">Home</router-link>
         <router-link to="/about">About</router-link>
         <router-link to="/jobs">Jobs</router-link>
+        <router-link to="/immigration-assistance">Immigration Assistance</router-link> <!-- New Link -->
         <router-link to="/signin">Sign In</router-link>
         <router-link to="/signup">Sign Up</router-link>
       </nav>
     </header>
     <main class="app-content">
-      <router-view></router-view>
+      <router-view></router-view> <!-- This is where page content loads -->
     </main>
   </div>
 </template>
@@ -32,6 +36,16 @@ export default {
   padding: 20px 40px;
   background-color: #2c3e50;
   color: white;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+.logo-image {
+  width: 100px; /* Adjust size as needed */
+  height: 100px;
 }
 
 .logo {
