@@ -2,6 +2,7 @@
   <div class="job-search-container">
     <h2>Find Visa-Sponsored Jobs</h2>
 
+    <!-- Search Form -->
     <form @submit.prevent="searchJobs" class="search-form">
       <label for="keyword">Job Title or Keywords</label>
       <input type="text" id="keyword" v-model="searchTerm" placeholder="e.g., Software Engineer, Marketing" />
@@ -18,6 +19,7 @@
       <button type="submit">Search</button>
     </form>
 
+    <!-- Job Results -->
     <div v-if="filteredJobs.length" class="job-results">
       <h3>Job Results</h3>
       <ul>
@@ -44,37 +46,34 @@ export default {
       selectedCountry: this.country || "",
       searchExecuted: false,
       euCountries: [
-        'Austria', 'Belgium', 'Bulgaria', 'Croatia', 'Cyprus', 'Czech Republic',
-        'Denmark', 'Estonia', 'Finland', 'France', 'Germany', 'Greece', 'Hungary',
-        'Ireland', 'Italy', 'Latvia', 'Lithuania', 'Luxembourg', 'Malta', 'Netherlands',
-        'Poland', 'Portugal', 'Romania', 'Slovakia', 'Slovenia', 'Spain', 'Sweden'
+        "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czech Republic",
+        "Denmark", "Estonia", "Finland", "France", "Germany", "Greece", "Hungary",
+        "Ireland", "Italy", "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands",
+        "Poland", "Portugal", "Romania", "Slovakia", "Slovenia", "Spain", "Sweden"
       ],
-      jobs: [
-        { id: 1, title: 'Software Engineer', company: 'TechCorp', location: 'Berlin, Germany', description: 'Develop web applications with a focus on performance.' },
-        { id: 2, title: 'Data Scientist', company: 'DataX', location: 'Paris, France', description: 'Analyze data and build predictive models.' },
-        { id: 3, title: 'Marketing Specialist', company: 'GlobalAds', location: 'Amsterdam, Netherlands', description: 'Manage and optimize digital marketing campaigns.' },
-        { id: 4, title: 'Project Manager', company: 'BizSolutions', location: 'Rome, Italy', description: 'Coordinate project activities and ensure timely delivery.' },
-      ],
+      filteredJobs: []  // Holds the job results fetched from the API
     };
   },
-  computed: {
-    filteredJobs() {
-      return this.jobs.filter((job) => {
-        const matchesTitle = this.searchTerm ? job.title.toLowerCase().includes(this.searchTerm.toLowerCase()) : true;
-        const matchesLocation = this.location ? job.location.toLowerCase().includes(this.location.toLowerCase()) : true;
-        const matchesCountry = this.selectedCountry ? job.location.includes(this.selectedCountry) : true;
-        return matchesTitle && matchesLocation && matchesCountry;
-      });
-    },
-  },
   methods: {
-    searchJobs() {
-      this.searchExecuted = true;
-    },
-    applyForJob(job) {
-      alert(`You applied for the position: ${job.title} at ${job.company}`);
-    },
-  },
+  async searchJobs() {
+    try {
+      const query = new URLSearchParams({
+        title: this.searchTerm,
+        location: this.location,
+        country: this.selectedCountry,
+      });
+      const response = await fetch(`${process.env.VUE_APP_API_URL}/jobs/search?${query}`);
+      if (response.ok) {
+        this.filteredJobs = await response.json();
+        this.searchExecuted = true;
+      } else {
+        console.error("Error fetching jobs:", response.status);
+      }
+    } catch (error) {
+      console.error("Failed to fetch jobs:", error);
+    }
+  }
+}
 };
 </script>
 
@@ -100,7 +99,8 @@ h2 {
   margin-top: 10px;
 }
 
-.search-form input, .search-form select {
+.search-form input,
+.search-form select {
   width: 100%;
   padding: 10px;
   margin-top: 5px;
