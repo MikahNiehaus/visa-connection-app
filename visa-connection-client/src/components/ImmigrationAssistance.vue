@@ -2,6 +2,8 @@
   <div class="immigration-assistance">
     <h1>Find Your Ideal Immigration Destination</h1>
     <form @submit.prevent="handleFormSubmit">
+
+      <!-- Employment Type -->
       <label>Employment Type:</label>
       <div class="checkbox-group">
         <input type="checkbox" id="remote" value="Remote" v-model="formData.employmentType" />
@@ -10,26 +12,64 @@
         <label for="onsite">On-site Work</label>
       </div>
 
+      <!-- Language Preference -->
       <label>Language Preference:</label>
-      <select v-model="formData.language" multiple>
-        <option v-for="language in languages" :key="language" :value="language">
-          {{ language }}
-        </option>
-      </select>
-
-      <label>Preferred Countries:</label>
-      <select v-model="formData.countryPreferences" multiple>
-        <option v-for="country in countries" :key="country" :value="country">{{ country }}</option>
-      </select>
-
-      <label>Cost of Living:</label>
-      <input type="range" min="1" max="3" v-model="formData.costOfLiving" />
-      <div class="cost-labels">
-        <span>Low</span>
-        <span>Medium</span>
-        <span>High</span>
+      <div class="checkbox-group">
+        <div v-for="language in languages" :key="language" class="checkbox-item">
+          <input type="checkbox" :id="language" :value="language" v-model="formData.language" />
+          <label :for="language">{{ language }}</label>
+        </div>
       </div>
 
+      <!-- Current Country for Cost of Living Adjustment -->
+      <label>Your Current Country:</label>
+      <input type="text" v-model="currentCountry" placeholder="Search your country..." list="countriesList" />
+      <datalist id="countriesList">
+        <option v-for="country in countries" :key="country">{{ country }}</option>
+      </datalist>
+      <button type="button" @click="setCostOfLivingBasedOnLocation">Set Cost of Living Based on Current Country</button>
+
+      <!-- Preferred Countries -->
+      <label>Preferred Countries:</label>
+      <input type="text" v-model="preferredCountryFilter" placeholder="Search preferred countries..." />
+      <div class="checkbox-group">
+        <div v-for="country in filteredCountries" :key="country" class="checkbox-item">
+          <input type="checkbox" :id="country" :value="country" v-model="formData.countryPreferences" />
+          <label :for="country">{{ country }}</label>
+        </div>
+      </div>
+
+      <!-- Job Sector -->
+      <label>Preferred Job Sector:</label>
+      <select v-model="formData.jobSector">
+        <option disabled value="">Select Sector</option>
+        <option v-for="sector in jobSectors" :key="sector">{{ sector }}</option>
+      </select>
+
+      <!-- Education Level -->
+      <label>Your Education Level:</label>
+      <select v-model="formData.educationLevel">
+        <option disabled value="">Select Education Level</option>
+        <option v-for="level in educationLevels" :key="level">{{ level }}</option>
+      </select>
+
+      <!-- Salary Expectations -->
+      <label>Minimum Expected Monthly Salary (USD):</label>
+      <input type="number" v-model="formData.salaryExpectations" placeholder="e.g., 3000" />
+
+      <!-- Work-Life Balance Importance -->
+      <label>How Important is Work-Life Balance?</label>
+      <input type="range" min="1" max="5" v-model="formData.workLifeBalance" />
+      <small>(1: Not Important, 5: Very Important)</small>
+
+      <!-- Cost of Living -->
+      <label>Cost of Living:</label>
+      <div class="cost-slider">
+        <input type="range" min="500" max="5000" step="100" v-model="formData.costOfLiving" />
+        <span class="cost-display">USD {{ formData.costOfLiving }}</span>
+      </div>
+
+      <!-- Climate Preference -->
       <label>Climate Preference:</label>
       <select v-model="formData.climate">
         <option disabled value="">Select Climate</option>
@@ -41,6 +81,7 @@
       <button type="submit">Get Recommendations</button>
     </form>
 
+    <!-- Display Recommendations -->
     <div v-if="recommendations.length" class="recommendations">
       <h2>Recommended Countries and Visa Information</h2>
       <ul>
@@ -64,13 +105,33 @@ export default {
         employmentType: [],
         language: [],
         countryPreferences: [],
-        costOfLiving: 2,
-        climate: ""
+        costOfLiving: 3000,
+        climate: "",
+        jobSector: "",
+        educationLevel: "",
+        salaryExpectations: 3000,
+        workLifeBalance: 3
       },
+      currentCountry: "",
+      preferredCountryFilter: "",
       languages: ["English", "Spanish", "French", "German", "Dutch", "Mandarin", "Japanese"],
-      countries: ["Netherlands", "Canada", "Australia", "New Zealand", "Germany", "Singapore"],
+      countries: [
+        "Austria", "Belgium", "Bulgaria", "Croatia", "Cyprus", "Czech Republic", "Denmark",
+        "Estonia", "Finland", "France", "Germany", "Greece", "Hungary", "Ireland", "Italy",
+        "Latvia", "Lithuania", "Luxembourg", "Malta", "Netherlands", "Poland", "Portugal",
+        "Romania", "Slovakia", "Slovenia", "Spain", "Sweden"
+      ],
+      jobSectors: ["Technology", "Healthcare", "Finance", "Education", "Engineering", "Marketing"],
+      educationLevels: ["High School", "Associate's Degree", "Bachelor's Degree", "Master's Degree", "Ph.D."],
       recommendations: []
     };
+  },
+  computed: {
+    filteredCountries() {
+      return this.countries.filter((country) =>
+        country.toLowerCase().includes(this.preferredCountryFilter.toLowerCase())
+      );
+    }
   },
   methods: {
     async handleFormSubmit() {
@@ -88,10 +149,21 @@ export default {
       } catch (error) {
         console.error("Failed to fetch recommendations:", error);
       }
+    },
+    setCostOfLivingBasedOnLocation() {
+      const countryCostOfLivingMap = {
+        "Austria": 2500,
+        "Belgium": 2400,
+        "France": 2600,
+        "Germany": 2500,
+        "Netherlands": 2600
+      };
+      this.formData.costOfLiving = countryCostOfLivingMap[this.currentCountry] || 3000;
     }
   }
 };
 </script>
+
 <style scoped>
 .immigration-assistance {
   max-width: 700px;
@@ -114,19 +186,29 @@ label {
 
 .checkbox-group {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 10px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: center;
 }
 
 input[type="range"] {
   width: 100%;
 }
 
-.cost-labels {
+.cost-slider {
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  font-size: 0.9em;
-  margin-bottom: 10px;
+}
+
+.cost-display {
+  font-weight: bold;
+  margin-left: 10px;
 }
 
 button {
