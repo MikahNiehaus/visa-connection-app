@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("VisaConnectionApi")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7bb544844e6483bbf478c5ef0288f3150dca3f44")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cf1935c465bb62502e6ac78822829c27a80d3b4")]
 [assembly: System.Reflection.AssemblyProductAttribute("VisaConnectionApi")]
 [assembly: System.Reflection.AssemblyTitleAttribute("VisaConnectionApi")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
